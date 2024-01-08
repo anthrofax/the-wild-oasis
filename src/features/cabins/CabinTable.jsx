@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import CabinRow from "./CabinRow.jsx";
 import { useQuery } from "@tanstack/react-query";
-import {getCabin} from '../../services/apiCabins.js'
+import { getCabin } from "../../services/apiCabins.js";
 import Spinner from "../../ui/Spinner.jsx";
 
 const Table = styled.div`
@@ -44,7 +44,7 @@ function CabinTable() {
     <Table role="table">
       <TableHeader role="row"></TableHeader>
       {cabins.map((cabin) => (
-        <CabinRow cabin={cabin}  key={cabin.id}/>
+        <CabinRow cabin={cabin} key={cabin.id} />
       ))}
     </Table>
   );
