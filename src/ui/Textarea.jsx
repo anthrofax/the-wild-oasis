@@ -9,3 +9,6 @@ export const Textarea = styled.textarea`
   width: 100%;
   height: 8rem;
 `;
+
+
+export default Textarea
