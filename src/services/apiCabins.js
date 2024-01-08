@@ -18,13 +18,10 @@ export async function createEditCabin(newCabin, id) {
   );
 
   const hasImage = newCabin.image?.startsWith?.(supabaseUrl);
-  console.log(hasImage)
 
   const imagePath = hasImage
     ? newCabin.image
     : `${supabaseUrl}/storage/v1/object/public/cabin-images/${imageName}`;
-
-    console.log(imagePath)
 
   let query = supabase.from("cabins");
 
@@ -35,13 +32,14 @@ export async function createEditCabin(newCabin, id) {
   if (id) query = query.update({ ...newCabin, image: imagePath }).eq("id", id);
 
   const { data, error } = await query.select().single();
-  console.log(data);
 
   if (error) {
     console.error(error);
     if (!id) throw new Error("Gagal menambahkan data cabin");
     throw new Error("Gagal memperbarui data cabin");
   }
+
+  if (hasImage) return data;
 
   const { error: storageError } = await supabase.storage
     .from("cabin-images")

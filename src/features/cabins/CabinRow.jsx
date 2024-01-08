@@ -1,12 +1,13 @@
-import styled from "styled-components";
-import { formatCurrency } from "../../utils/helpers.js";
-import { useMutation } from "@tanstack/react-query";
-import { deleteCabin } from "../../services/apiCabins.js";
-import { useQueryClient } from "@tanstack/react-query";
-import { toast } from "react-hot-toast";
 import { useState } from "react";
+import styled from "styled-components";
+import { HiSquare2Stack, HiPencil, HiTrash } from "react-icons/hi2";
+
 import CreateCabinForm from "./CreateCabinForm.jsx";
 import Row from "../../ui/Row.jsx";
+import { formatCurrency } from "../../utils/helpers.js";
+
+import { useDeleteCabin } from "./useDeleteCabin.js";
+import { useCreateCabin } from "./useCreateCabin.js";
 
 const TableRow = styled.div`
   display: grid;
@@ -48,28 +49,25 @@ const Discount = styled.div`
 `;
 
 function CabinRow({ cabin }) {
-  const { id, name, maxCapacity, regularPrice, discount, image } = cabin;
-
-  const queryClient = useQueryClient();
-
-  const { mutate, isLoading: isDeleting } = useMutation({
-    mutationFn: deleteCabin,
-    onSuccess: () => {
-      toast.success("Data cabin berhasil dihapus");
-
-      queryClient.invalidateQueries({
-        queryKey: ["cabins"],
-      });
-    },
-    onError: (err) => {
-      toast.error(err.message);
-    },
-  });
-
+  const { id, name, maxCapacity, regularPrice, discount, image, description } =
+    cabin;
+  const { createCabin, isCreating } = useCreateCabin();
+  const { deleteCabin, isDeleting } = useDeleteCabin();
   const [showForm, setShowForm] = useState(false);
 
   function handleShowForm() {
-    setShowForm(showForm => !showForm);
+    setShowForm((showForm) => !showForm);
+  }
+
+  function handleDuplicateCabin() {
+    createCabin({
+      name: `Copy of ${name}`,
+      maxCapacity,
+      regularPrice,
+      discount,
+      image,
+      description,
+    });
   }
 
   return (
@@ -79,17 +77,26 @@ function CabinRow({ cabin }) {
         <Cabin>{name}</Cabin>
         <div>Muat hingga {maxCapacity} orang</div>
         <Price>{formatCurrency(regularPrice)}</Price>
-        <Discount>{formatCurrency(discount)}</Discount>
-        <Row type="horizontal" >
-          <button onClick={() => setShowForm((showForm) => !showForm)}>
-            Edit
+        {discount ? (
+          <Discount>{formatCurrency(discount)}</Discount>
+        ) : (
+          <span>&mdash;</span>
+        )}
+        <Row type="horizontal">
+          <button disabled={isCreating} onClick={handleDuplicateCabin}>
+            <HiSquare2Stack />
           </button>
-          <button onClick={() => mutate(id)} disabled={isDeleting}>
-            Delete
+          <button onClick={() => setShowForm((showForm) => !showForm)}>
+            <HiPencil />
+          </button>
+          <button onClick={() => deleteCabin(id)} disabled={isDeleting}>
+            <HiTrash />
           </button>
         </Row>
       </TableRow>
-      {showForm && <CreateCabinForm dataToEdit={cabin} onShowForm={handleShowForm} />}
+      {showForm && (
+        <CreateCabinForm dataToEdit={cabin} onShowForm={handleShowForm} />
+      )}
     </>
   );
 }

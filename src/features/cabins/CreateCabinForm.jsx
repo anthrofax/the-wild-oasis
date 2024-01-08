@@ -1,17 +1,15 @@
-import styled from "styled-components";
-
 import Input from "../../ui/Input";
 import Form from "../../ui/Form";
 import Button from "../../ui/Button";
 import FileInput from "../../ui/FileInput";
 import Textarea from "../../ui/Textarea";
-import { useForm } from "react-hook-form";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createEditCabin } from "../../services/apiCabins.js";
-import { toast } from "react-hot-toast";
 import FormRow from "../../ui/FormRow.jsx";
 
-function CreateCabinForm({ dataToEdit = {}, onShowForm}) {
+import { useForm } from "react-hook-form";
+import { useCreateCabin } from "./useCreateCabin.js";
+import { useEditCabin } from "./useEditCabin.js";
+
+function CreateCabinForm({ dataToEdit = {}, onShowForm }) {
   const { id: editId, ...values } = dataToEdit;
   const isEditSession = Boolean(editId);
 
@@ -20,43 +18,29 @@ function CreateCabinForm({ dataToEdit = {}, onShowForm}) {
   });
 
   const { errors } = formState;
-  const queryClient = useQueryClient();
 
-  const { mutate: createCabin, isLoading: isCreating } = useMutation({
-    mutationFn: createEditCabin,
-    onSuccess: () => {
-      toast.success("Data cabin berhasil ditambahkan");
-
-      queryClient.invalidateQueries({
-        queryKey: ["cabins"],
-      });
-
-      reset();
-    },
-    onError: (err) => toast.error(err.message),
-  });
-
-  const { mutate: editCabin, isLoading: isEditing } = useMutation({
-    mutationFn: ({ newCabin, id }) => createEditCabin(newCabin, id),
-    onSuccess: () => {
-      toast.success("Data cabin berhasil diperbarui");
-
-      queryClient.invalidateQueries({
-        queryKey: ["cabins"],
-      });
-
-      onShowForm();
-    },
-    onError: (err) => toast.error(err.message),
-  });
+  const { createCabin, isCreating } = useCreateCabin();
+  const { editCabin, isEditing } = useEditCabin();
 
   const isLoading = isCreating || isEditing;
 
   function onSubmit(data) {
     const image = typeof data.image === "string" ? data.image : data.image[0];
 
-    if (isEditSession) editCabin({newCabin: { ...data, image }, id: data.id});
-    else createCabin({ ...data, image });
+    if (isEditSession)
+      editCabin(
+        { newCabin: { ...data, image }, id: data.id },
+        {
+          onSuccess: () => onShowForm(),
+        }
+      );
+    else
+      createCabin(
+        { ...data, image },
+        {
+          onSuccess: () => reset(),
+        }
+      );
   }
 
   function onError(errors) {
@@ -141,7 +125,9 @@ function CreateCabinForm({ dataToEdit = {}, onShowForm}) {
           id="image"
           accept="image/*"
           {...register("image", {
-            required: isEditSession ? false : "Anda perlu mengunggah foto cabin",
+            required: isEditSession
+              ? false
+              : "Anda perlu mengunggah foto cabin",
           })}
           disabled={isLoading}
         />
