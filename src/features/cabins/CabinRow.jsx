@@ -59,7 +59,7 @@ function CabinRow({ cabin }) {
       });
     },
     onError: (err) => {
-      toast.error(err);
+      toast.error(err.message);
     },
   });
 
