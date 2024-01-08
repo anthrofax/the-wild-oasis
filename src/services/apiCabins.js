@@ -11,23 +11,36 @@ export async function getCabin() {
   return data;
 }
 
-export async function createCabin(newCabin) {
+export async function createEditCabin(newCabin, id) {
   const imageName = `${Math.random()}-${newCabin.image.name}`.replaceAll(
     "/",
     ""
   );
 
-  const imagePath = `${supabaseUrl}/storage/v1/object/public/cabin-images/${imageName}`;
+  const hasImage = newCabin.image?.startsWith?.(supabaseUrl);
+  console.log(hasImage)
+
+  const imagePath = hasImage
+    ? newCabin.image
+    : `${supabaseUrl}/storage/v1/object/public/cabin-images/${imageName}`;
+
+    console.log(imagePath)
+
+  let query = supabase.from("cabins");
 
   //1. Logic untuk menambahkan data ke cabins table
-  const { data: addedData, error } = await supabase
-    .from("cabins")
-    .insert([{ ...newCabin, image: imagePath }])
-    .select();
+  if (!id) query = query.insert([{ ...newCabin, image: imagePath }]);
+
+  // 2.  Logic untuk memperbarui data pada cabins table
+  if (id) query = query.update({ ...newCabin, image: imagePath }).eq("id", id);
+
+  const { data, error } = await query.select().single();
+  console.log(data);
 
   if (error) {
     console.error(error);
-    throw new Error("Gagal menambahkan data cabin");
+    if (!id) throw new Error("Gagal menambahkan data cabin");
+    throw new Error("Gagal memperbarui data cabin");
   }
 
   const { error: storageError } = await supabase.storage
@@ -35,7 +48,7 @@ export async function createCabin(newCabin) {
     .upload(imageName, newCabin.image);
 
   if (storageError) {
-    await supabase.from("cabins").delete().eq("id", addedData[0].id);
+    await supabase.from("cabins").delete().eq("id", data.id);
 
     console.log(storageError);
     throw new Error(
@@ -43,7 +56,7 @@ export async function createCabin(newCabin) {
     );
   }
 
-  return addedData;
+  return data;
 }
 
 export async function deleteCabin(id) {
