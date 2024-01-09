@@ -7,7 +7,7 @@ import FormRow from "../../ui/FormRow.jsx";
 
 import { useForm } from "react-hook-form";
 import { useCreateCabin } from "./useCreateCabin.js";
-import { useEditCabin } from "./useEditCabin.js";
+import { useEditCabin } from "./useUpdateCabin.js";
 
 function CreateCabinForm({ dataToEdit = {}, onShowForm }) {
   const { id: editId, ...values } = dataToEdit;
