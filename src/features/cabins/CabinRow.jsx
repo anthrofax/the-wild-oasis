@@ -1,4 +1,3 @@
-import { useState } from "react";
 import styled from "styled-components";
 import { HiSquare2Stack, HiPencil, HiTrash } from "react-icons/hi2";
 
@@ -8,6 +7,8 @@ import { formatCurrency } from "../../utils/helpers.js";
 
 import { useDeleteCabin } from "./useDeleteCabin.js";
 import { useCreateCabin } from "./useCreateCabin.js";
+import Modal from "../../ui/Modal.jsx";
+import ConfirmDelete from "../../ui/ConfirmDelete.jsx";
 
 const TableRow = styled.div`
   display: grid;
@@ -53,11 +54,6 @@ function CabinRow({ cabin }) {
     cabin;
   const { createCabin, isCreating } = useCreateCabin();
   const { deleteCabin, isDeleting } = useDeleteCabin();
-  const [showForm, setShowForm] = useState(false);
-
-  function handleShowForm() {
-    setShowForm((showForm) => !showForm);
-  }
 
   function handleDuplicateCabin() {
     createCabin({
@@ -86,17 +82,28 @@ function CabinRow({ cabin }) {
           <button disabled={isCreating} onClick={handleDuplicateCabin}>
             <HiSquare2Stack />
           </button>
-          <button onClick={() => setShowForm((showForm) => !showForm)}>
-            <HiPencil />
-          </button>
-          <button onClick={() => deleteCabin(id)} disabled={isDeleting}>
-            <HiTrash />
-          </button>
+
+          <Modal>
+            <Modal.Open opens="edit-form">
+              <button>
+                <HiPencil />
+              </button>
+            </Modal.Open>
+            <Modal.Window name="edit-form">
+              <CreateCabinForm dataToEdit={cabin} />
+            </Modal.Window>
+
+            <Modal.Open opens="delete-confirm">
+              <button  disabled={isDeleting}>
+                <HiTrash />
+              </button>
+            </Modal.Open>
+            <Modal.Window name="delete-confirm">
+              <ConfirmDelete onConfirm={() => deleteCabin(id)} />
+            </Modal.Window>
+          </Modal>
         </Row>
       </TableRow>
-      {showForm && (
-        <CreateCabinForm dataToEdit={cabin} onShowForm={handleShowForm} />
-      )}
     </>
   );
 }

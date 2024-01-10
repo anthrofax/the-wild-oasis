@@ -13,7 +13,7 @@ export function useOutsideClick(handleClose, handleCapture = true) {
   
         return () => document.removeEventListener("click", handleClickOverlay, handleCapture);
       },
-      [handleClose]
+      [handleCapture, handleClose]
     );
 
     return modal;
