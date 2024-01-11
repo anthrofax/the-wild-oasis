@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getCabin } from "../../services/apiCabins.js";
+import { getCabins } from "../../services/apiCabins.js";
 
 export function useGetCabins() {
   const {
@@ -8,7 +8,7 @@ export function useGetCabins() {
     error: fetchError,
   } = useQuery({
     queryKey: ["cabins"],
-    queryFn: getCabin,
+    queryFn: getCabins,
   });
 
   return {isFetching, cabins, fetchError}

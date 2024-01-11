@@ -26,6 +26,8 @@ function CabinTable() {
   const { isFetching, cabins } = useGetCabins();
   const [searchParams] = useSearchParams();
 
+  if (!cabins?.length) return <Empty resource="cabin" />;
+
   const filteredValue = searchParams.get("discount") || "all";
 
   // 1. Filter
@@ -48,8 +50,6 @@ function CabinTable() {
       a.name.toLowerCase() > b.name.toLowerCase() ? 1 * modifier : -1 * modifier
     );
   else filteredCabins?.sort((a, b) => (a[field] - b[field]) * modifier);
-
-  if (!filteredCabins) return <Empty resource="cabin" />;
 
   return (
     <Menus>
