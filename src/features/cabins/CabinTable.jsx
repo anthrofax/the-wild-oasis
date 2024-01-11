@@ -26,16 +26,30 @@ function CabinTable() {
   const { isFetching, cabins } = useGetCabins();
   const [searchParams] = useSearchParams();
 
-  const filteredValue = searchParams.get('discount') || 'all';
+  const filteredValue = searchParams.get("discount") || "all";
 
+  // 1. Filter
   let filteredCabins;
-  if (filteredValue === 'all') filteredCabins = cabins;
-  if (filteredValue === 'no-discount') filteredCabins = cabins?.filter(cabin => cabin.discount === 0);
-  if (filteredValue === 'with-discount') filteredCabins = cabins?.filter(cabin => cabin.discount > 0);
+  if (filteredValue === "all") filteredCabins = cabins;
+  if (filteredValue === "no-discount")
+    filteredCabins = cabins?.filter((cabin) => cabin.discount === 0);
+  if (filteredValue === "with-discount")
+    filteredCabins = cabins?.filter((cabin) => cabin.discount > 0);
 
   if (isFetching) return <Spinner />;
 
-  if (!filteredCabins) return <Empty resource="cabin" />
+  // 2. Sort
+  const sortBy = searchParams.get("sortBy") || "name-asc";
+  const [field, direction] = sortBy.split("-");
+  const modifier = direction === "asc" ? 1 : -1;
+
+  if (field === "name")
+    filteredCabins?.sort((a, b) =>
+      a.name.toLowerCase() > b.name.toLowerCase() ? 1 * modifier : -1 * modifier
+    );
+  else filteredCabins?.sort((a, b) => (a[field] - b[field]) * modifier);
+
+  if (!filteredCabins) return <Empty resource="cabin" />;
 
   return (
     <Menus>
