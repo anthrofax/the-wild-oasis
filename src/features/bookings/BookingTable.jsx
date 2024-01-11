@@ -8,6 +8,7 @@ import Spinner from "../../ui/Spinner";
 function BookingTable() {
   const { isFetching, dataBookings } = useGetBookings();
   const bookings = dataBookings || [];
+  console.log(bookings)
 
   if (!bookings.length) return <Empty resource="booking" />;
 
