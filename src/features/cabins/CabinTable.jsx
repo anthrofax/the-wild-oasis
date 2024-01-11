@@ -4,6 +4,8 @@ import Spinner from "../../ui/Spinner.jsx";
 import { useGetCabins } from "./useGetCabins.js";
 import Table from "../../ui/Table.jsx";
 import Menus from "../../ui/Menus.jsx";
+import { useSearchParams } from "react-router-dom";
+import Empty from "../../ui/Empty.jsx";
 
 const TableHeader = styled.header`
   display: grid;
@@ -22,8 +24,18 @@ const TableHeader = styled.header`
 
 function CabinTable() {
   const { isFetching, cabins } = useGetCabins();
+  const [searchParams] = useSearchParams();
+
+  const filteredValue = searchParams.get('discount') || 'all';
+
+  let filteredCabins;
+  if (filteredValue === 'all') filteredCabins = cabins;
+  if (filteredValue === 'no-discount') filteredCabins = cabins?.filter(cabin => cabin.discount === 0);
+  if (filteredValue === 'with-discount') filteredCabins = cabins?.filter(cabin => cabin.discount > 0);
 
   if (isFetching) return <Spinner />;
+
+  if (!filteredCabins) return <Empty resource="cabin" />
 
   return (
     <Menus>
@@ -37,7 +49,7 @@ function CabinTable() {
           <div></div>
         </Table.Header>
         <Table.Body
-          data={cabins}
+          data={filteredCabins}
           render={(cabin) => <CabinRow cabin={cabin} key={cabin.id} />}
         />
       </Table>
