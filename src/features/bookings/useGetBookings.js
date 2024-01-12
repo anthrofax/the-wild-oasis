@@ -11,13 +11,17 @@ export function useGetBookings() {
       ? null
       : { fieldName: "status", value: filteredValue };
 
+  const sortByRaw = searchParams.get('sortBy') || 'startDate-dsc'
+  const [field, direction] = sortByRaw.split('-');
+  const sortBy = {fieldName: field, direction};
+
   const {
     isLoading: isFetching,
     data: dataBookings,
     error: fetchError,
   } = useQuery({
-    queryKey: ["bookings", filter],
-    queryFn: () => getBookings({filter}),
+    queryKey: ["bookings", filter, sortBy],
+    queryFn: () => getBookings({filter, sortBy}),
   });
 
   return { isFetching, dataBookings, fetchError };
