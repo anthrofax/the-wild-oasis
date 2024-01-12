@@ -1,5 +1,4 @@
 import supabase, { supabaseUrl } from "./supabase.js";
-
 export async function getCabins() {
   const { data, error } = await supabase.from("cabins").select("*");
 
@@ -41,6 +40,7 @@ export async function createEditCabin(newCabin, id) {
 
   if (hasImage) return data;
 
+  // 3. Logic untuk mengupload gambar ke supabase bucket (hanya jika tidak terjadi error dan gambar belum pernah diunggah sama sekali sebelumnya)
   const { error: storageError } = await supabase.storage
     .from("cabin-images")
     .upload(imageName, newCabin.image);

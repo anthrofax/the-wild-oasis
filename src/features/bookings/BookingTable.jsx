@@ -8,11 +8,11 @@ import Spinner from "../../ui/Spinner";
 function BookingTable() {
   const { isFetching, dataBookings } = useGetBookings();
   const bookings = dataBookings || [];
-  console.log(bookings)
-
-  if (!bookings.length) return <Empty resource="booking" />;
+  console.log(bookings);
 
   if (isFetching) return <Spinner />;
+
+  if (!bookings.length) return <Empty resource="booking" />;
 
   return (
     <Menus>
