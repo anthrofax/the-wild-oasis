@@ -1,3 +1,5 @@
+import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
+import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 
 const StyledPagination = styled.div`
@@ -55,3 +57,61 @@ const PaginationButton = styled.button`
     color: var(--color-brand-50);
   }
 `;
+
+const DATA_PER_PAGE = 10;
+
+function Pagination({ count }) {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const currentPage = !searchParams.get("page")
+    ? 1
+    : Number(searchParams.get("page"));
+  const pageCount = Math.ceil(count / DATA_PER_PAGE);
+
+  function handleNext() {
+    searchParams.set(
+      "page",
+      currentPage === pageCount ? currentPage : currentPage + 1
+    );
+    setSearchParams(searchParams);
+  }
+
+  function handlePrev() {
+    searchParams.set("page", currentPage === 1 ? currentPage : currentPage - 1);
+    setSearchParams(searchParams);
+  }
+
+  if (pageCount <= 1) return null;
+
+  return (
+    <StyledPagination>
+      <P>
+        Menampilkan <span>{(currentPage - 1) * DATA_PER_PAGE + 1}</span> -
+        <span>
+          {" "}
+          {currentPage * DATA_PER_PAGE > count
+            ? count
+            : currentPage * DATA_PER_PAGE}
+        </span>{" "}
+        dari <span>{count}</span> data
+      </P>
+
+      <Buttons>
+        <PaginationButton onClick={handlePrev} disabled={currentPage === 1}>
+          <span>
+            <HiChevronLeft />
+          </span>
+          Sebelumnya
+        </PaginationButton>
+
+        <PaginationButton onClick={handleNext} disabled={currentPage === pageCount}>
+          Selanjutnya
+          <span>
+            <HiChevronRight />
+          </span>
+        </PaginationButton>
+      </Buttons>
+    </StyledPagination>
+  );
+}
+
+export default Pagination;
