@@ -1,28 +1,39 @@
+import { DATA_PER_PAGE } from "../utils/config";
 import { getToday } from "../utils/helpers";
 import supabase from "./supabase";
 
-export async function getBookings({ filter, sortBy }) {
+export async function getBookings({ filter, sortBy, page }) {
   let query = supabase
     .from("bookings")
     .select(
-      "id, created_at, startDate, endDate, numNights, status, totalPrice, cabins(name), guests(fullName, email)"
+      "id, created_at, startDate, endDate, numNights, status, totalPrice, cabins(name), guests(fullName, email)",
+      { count: "exact" }
     );
 
+  // FITER
   if (filter) query = query.eq(filter.fieldName, filter.value);
 
+  // SORT
   if (sortBy)
     query = query.order(sortBy.fieldName, {
       ascending: sortBy.direction === "asc",
     });
 
-  const { data: bookings, error: bookingsError } = await query;
+  // PAGINATION
+  if (page) {
+    const from = (page - 1) * DATA_PER_PAGE;
+    const to = page * DATA_PER_PAGE - 1;
+    query = query.range(from, to);
+  }
+
+  const { data: bookings, error: bookingsError, count } = await query;
 
   if (bookingsError) {
     console.error(bookingsError);
     throw new Error("Tidak ada booking yang tersedia untuk saat ini");
   }
 
-  return bookings;
+  return { bookings, count };
 }
 
 export async function getBooking(id) {
