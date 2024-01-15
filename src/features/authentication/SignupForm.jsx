@@ -3,15 +3,23 @@ import Form from "../../ui/Form";
 import FormRow from "../../ui/FormRow";
 import Input from "../../ui/Input";
 import { useForm } from "react-hook-form";
+import { useSignUp } from "./useSignUp.js";
+import SpinnerMini from "../../ui/SpinnerMini.jsx";
 
 // Email regex: /\S+@\S+\.\S+/
 
 function SignupForm() {
-  const { register, handleSubmit, formState, getValues } = useForm();
+  const { register, handleSubmit, formState, getValues, reset } = useForm();
+  const { signup, isLoading } = useSignUp();
   const { errors } = formState;
 
-  function onSubmit(submittedData) {
-    console.log(submittedData);
+  function onSubmit({ fullName, email, password }) {
+    signup(
+      { fullName, email, password },
+      {
+        onSettled: () => reset(),
+      }
+    );
   }
 
   return (
@@ -20,6 +28,7 @@ function SignupForm() {
         <Input
           type="text"
           id="fullName"
+          disabled={isLoading}
           {...register("fullName", { required: "Kolom ini perlu diisi" })}
         />
       </FormRow>
@@ -28,6 +37,7 @@ function SignupForm() {
         <Input
           type="email"
           id="email"
+          disabled={isLoading}
           {...register("email", {
             required: "Kolom ini perlu diisi",
             pattern: "/S+@S+.S+/",
@@ -42,6 +52,7 @@ function SignupForm() {
         <Input
           type="password"
           id="password"
+          disabled={isLoading}
           {...register("password", {
             required: "Kolom ini perlu diisi",
             minLength: {
@@ -62,6 +73,7 @@ function SignupForm() {
               value === getValues().password ||
               "Kata sandi yang anda masukkan tidak cocok ",
           })}
+          disabled={isLoading}
         />
       </FormRow>
 
@@ -70,7 +82,9 @@ function SignupForm() {
         <Button variation="secondary" type="reset">
           Cancel
         </Button>
-        <Button>Create new user</Button>
+        <Button disabled={isLoading}>
+          {isLoading ? <SpinnerMini /> : "Create new user"}
+        </Button>
       </FormRow>
     </Form>
   );
