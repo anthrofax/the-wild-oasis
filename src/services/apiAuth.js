@@ -5,8 +5,10 @@ export async function signUp({ email, password, fullName }) {
     email,
     password,
     options: {
-      fullName,
-      avatar: "",
+      data: {
+        fullName,
+        avatar: "",
+      },
     },
   });
 
