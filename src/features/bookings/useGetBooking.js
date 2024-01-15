@@ -10,9 +10,9 @@ export default function useGetBooking() {
     data: booking,
     error: fetchError,
   } = useQuery({
-    queryKey: ["bookings"],
+    queryKey: ["bookings", bookingId],
     queryFn: () => getBooking(bookingId),
   });
 
-  return { isFetching, booking, fetchError };
+  return { isFetching, booking: booking || {}, fetchError };
 }
