@@ -12,7 +12,7 @@ import useGetBooking from "../bookings/useGetBooking";
 import Spinner from "../../ui/Spinner";
 import Checkbox from "../../ui/Checkbox";
 import { useEffect, useState } from "react";
-import useCheckin from "../bookings/useCheckin";
+import useCheckin from "./useCheckin";
 import { formatCurrency } from "../../utils/helpers";
 import { useGetSettings } from "../settings/useGetSetting";
 
@@ -67,7 +67,6 @@ function CheckinBooking() {
     }
   }
 
-  console.log(settings);
   const optionalBreakfastPrice = hasBreakfast
     ? 0
     : settings?.breakfastPrice * numGuests * numNights;
