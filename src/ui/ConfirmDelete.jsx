@@ -22,15 +22,15 @@ const StyledConfirmDelete = styled.div`
 
 function ConfirmDelete({ resource, onConfirm, disabled, onCloseModal }) {
   function handleConfirmClick() {
-      onConfirm();
+    onConfirm();
   }
 
   return (
     <StyledConfirmDelete>
       <Heading type="h3">Delete {resource}</Heading>
       <p>
-        Are you sure you want to delete this {resource} permanently? This action
-        cannot be undone.
+        Apakah kamu yakin ingin menghapus data {resource} ini secara permanen?
+        Aksi ini tidak dapat dibatalkan
       </p>
 
       <div>
