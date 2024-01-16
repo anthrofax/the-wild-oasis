@@ -66,25 +66,25 @@ function MainNav() {
         <li>
           <StyledNavLink to="/bookings">
             <HiOutlineCalendarDays />
-            <span>Bookings</span>
+            <span>Data Booking</span>
           </StyledNavLink>
         </li>
         <li>
           <StyledNavLink to="/cabins">
             <HiOutlineHomeModern />
-            <span>Cabins</span>
+            <span>Kamar</span>
           </StyledNavLink>
         </li>
         <li>
           <StyledNavLink to="/users">
             <HiOutlineUsers />
-            <span>Users</span>
+            <span>Daftar Akun</span>
           </StyledNavLink>
         </li>
         <li>
           <StyledNavLink to="/settings">
             <HiOutlineCog6Tooth />
-            <span>Settings</span>
+            <span>Pengaturan</span>
           </StyledNavLink>
         </li>
       </NavList>
