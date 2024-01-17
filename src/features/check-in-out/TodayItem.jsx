@@ -34,7 +34,7 @@ function TodayItem({ activity }) {
 
       <Flag src={guests.countryFlag} />
       <Guest>{guests.fullName}</Guest>
-      <div>{numNights} nights</div>
+      <div>{numNights} malam</div>
 
       {status === "unconfirmed" && (
         <Button size="small" as={Link} to={`/checkin/${id}`}>

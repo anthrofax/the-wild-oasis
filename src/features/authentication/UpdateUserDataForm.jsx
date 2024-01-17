@@ -45,10 +45,10 @@ function UpdateUserDataForm() {
 
   return (
     <Form onSubmit={handleSubmit}>
-      <FormRow label="Email address">
+      <FormRow label="Alamat email">
         <Input value={email} disabled />
       </FormRow>
-      <FormRow label="Full name">
+      <FormRow label="Nama lengkap">
         <Input
           type="text"
           value={fullName}
@@ -57,7 +57,7 @@ function UpdateUserDataForm() {
           disabled={isUpdating}
         />
       </FormRow>
-      <FormRow label="Avatar image">
+      <FormRow label="Foto profil">
         <FileInput
           id="avatar"
           accept="image/*"
@@ -69,7 +69,7 @@ function UpdateUserDataForm() {
         <Button type="reset" variation="secondary" disabled={isUpdating} onClick={handleCancel}>
           Cancel
         </Button>
-        <Button disabled={isUpdating}>Update account</Button>
+        <Button disabled={isUpdating}>Perbarui account</Button>
       </FormRow>
     </Form>
   );

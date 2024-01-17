@@ -9,21 +9,21 @@ function BookingTableOperations() {
         filterField="status"
         options={[
           { value: "all", label: "All" },
-          { value: "checked-out", label: "Checked out" },
-          { value: "checked-in", label: "Checked in" },
-          { value: "unconfirmed", label: "Unconfirmed" },
+          { value: "checked-out", label: "Telah Check out" },
+          { value: "checked-in", label: "Telah Check in" },
+          { value: "unconfirmed", label: "Belum terkonfirmasi" },
         ]}
       />
 
       <SortBy
         options={[
-          { value: "startDate-desc", label: "Sort by date (recent first)" },
-          { value: "startDate-asc", label: "Sort by date (earlier first)" },
+          { value: "startDate-desc", label: "Urutkan berdasarkan tanggal (terkini)" },
+          { value: "startDate-asc", label: "Urutkan berdasarkan tanggal (terlama)" },
           {
             value: "totalPrice-desc",
-            label: "Sort by amount (high first)",
+            label: "Urutkan berdasarkan harga (Termahal)",
           },
-          { value: "totalPrice-asc", label: "Sort by amount (low first)" },
+          { value: "totalPrice-asc", label: "Urutkan berdasarkan harga (Termurah)" },
         ]}
       />
     </TableOperations>

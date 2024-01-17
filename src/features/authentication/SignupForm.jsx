@@ -24,7 +24,7 @@ function SignupForm() {
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
-      <FormRow label="Full name" error={errors?.fullName?.message}>
+      <FormRow label="Nama lengkap" error={errors?.fullName?.message}>
         <Input
           type="text"
           id="fullName"
@@ -33,7 +33,7 @@ function SignupForm() {
         />
       </FormRow>
 
-      <FormRow label="Email address" error={errors?.email?.message}>
+      <FormRow label="Alamat email" error={errors?.email?.message}>
         <Input
           type="email"
           id="email"
@@ -46,7 +46,7 @@ function SignupForm() {
       </FormRow>
 
       <FormRow
-        label="Password (min 8 characters)"
+        label="Kata sandi (min 8 karakter)"
         error={errors?.password?.message}
       >
         <Input
@@ -63,7 +63,7 @@ function SignupForm() {
         />
       </FormRow>
 
-      <FormRow label="Repeat password" error={errors?.passwordConfirm?.message}>
+      <FormRow label="Ulangi kata sandi" error={errors?.passwordConfirm?.message}>
         <Input
           type="password"
           id="passwordConfirm"
@@ -80,10 +80,10 @@ function SignupForm() {
       <FormRow>
         {/* type is an HTML attribute! */}
         <Button variation="secondary" type="reset" onClick={reset}>
-          Cancel
+          Batal
         </Button>
         <Button disabled={isLoading}>
-          {isLoading ? <SpinnerMini /> : "Create new user"}
+          {isLoading ? <SpinnerMini /> : "Daftar pengguna baru"}
         </Button>
       </FormRow>
     </Form>

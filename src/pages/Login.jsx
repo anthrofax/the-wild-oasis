@@ -18,7 +18,7 @@ function Login() {
     <LoginLayout>
       <Logo />
       <Heading as="h4">
-        Log in ke akun mu
+        Login
       </Heading>
       <LoginForm />
     </LoginLayout>

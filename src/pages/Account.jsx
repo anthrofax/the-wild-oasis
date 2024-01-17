@@ -6,15 +6,15 @@ import Row from "../ui/Row";
 function Account() {
   return (
     <>
-      <Heading as="h1">Update your account</Heading>
+      <Heading as="h1">Perbarui Akun</Heading>
 
       <Row>
-        <Heading as="h3">Update user data</Heading>
+        <Heading as="h3">Pebarui data akun</Heading>
         <UpdateUserDataForm />
       </Row>
 
       <Row>
-        <Heading as="h3">Update password</Heading>
+        <Heading as="h3">Perbarui kata sandi</Heading>
         <UpdatePasswordForm />
       </Row>
     </>

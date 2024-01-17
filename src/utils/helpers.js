@@ -1,5 +1,5 @@
-import { formatDistance, parseISO } from "date-fns";
-import { differenceInDays } from "date-fns";
+import { formatDistance, parseISO , differenceInDays} from "date-fns";
+import { id } from "date-fns/locale";
 
 // We want to make this function work for both Date objects and strings (which come from Supabase)
 export const subtractDates = (dateStr1, dateStr2) =>
@@ -8,6 +8,7 @@ export const subtractDates = (dateStr1, dateStr2) =>
 export const formatDistanceFromNow = (dateStr) =>
   formatDistance(parseISO(dateStr), new Date(), {
     addSuffix: true,
+    locale: id,
   })
     .replace("about ", "")
     .replace("in", "In");

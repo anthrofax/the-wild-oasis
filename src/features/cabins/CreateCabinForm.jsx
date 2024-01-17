@@ -52,7 +52,7 @@ function CreateCabinForm({ dataToEdit = {}, onCloseModal }) {
       onSubmit={handleSubmit(onSubmit, onError)}
       type={onCloseModal ? "modal" : ""}
     >
-      <FormRow label="Cabin name" error={errors?.name?.message}>
+      <FormRow label="Nama kamar" error={errors?.name?.message}>
         <Input
           type="text"
           disabled={isLoading}
@@ -63,7 +63,7 @@ function CreateCabinForm({ dataToEdit = {}, onCloseModal }) {
         />
       </FormRow>
 
-      <FormRow label="Maxinmum capacity" error={errors?.maxCapacity?.message}>
+      <FormRow label="Kapasitas maksimum" error={errors?.maxCapacity?.message}>
         <Input
           type="number"
           disabled={isLoading}
@@ -78,7 +78,7 @@ function CreateCabinForm({ dataToEdit = {}, onCloseModal }) {
         />
       </FormRow>
 
-      <FormRow label="Regular price" error={errors?.regularPrice?.message}>
+      <FormRow label="Harga normal" error={errors?.regularPrice?.message}>
         <Input
           type="number"
           disabled={isLoading}
@@ -93,7 +93,7 @@ function CreateCabinForm({ dataToEdit = {}, onCloseModal }) {
         />
       </FormRow>
 
-      <FormRow label="Discount" error={errors?.discount?.message}>
+      <FormRow label="Diskon" error={errors?.discount?.message}>
         <Input
           type="number"
           id="discount"
@@ -109,7 +109,7 @@ function CreateCabinForm({ dataToEdit = {}, onCloseModal }) {
       </FormRow>
 
       <FormRow
-        label="Description for website"
+        label="Deskripsi kamar"
         error={errors?.description?.message}
       >
         <Textarea
@@ -123,7 +123,7 @@ function CreateCabinForm({ dataToEdit = {}, onCloseModal }) {
         />
       </FormRow>
 
-      <FormRow label="Cabin photo" error={errors?.image?.message}>
+      <FormRow label="Foto kamar" error={errors?.image?.message}>
         <FileInput
           id="image"
           accept="image/*"

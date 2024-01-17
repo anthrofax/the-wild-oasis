@@ -30,7 +30,7 @@ function UpdateSettingsForm() {
 
   return (
     <Form>
-      <FormRow label="Minimum nights/booking">
+      <FormRow label="Minimum malam per booking">
         <Input
           disabled={isUpdating}
           type="number"
@@ -39,7 +39,7 @@ function UpdateSettingsForm() {
           onBlur={handleUpdateSetting}
         />
       </FormRow>
-      <FormRow label="Maximum nights/booking">
+      <FormRow label="Maksimum malam per booking">
         <Input
           disabled={isUpdating}
           type="number"
@@ -48,7 +48,7 @@ function UpdateSettingsForm() {
           onBlur={handleUpdateSetting}
         />
       </FormRow>
-      <FormRow label="Maximum guests/booking">
+      <FormRow label="Maksimum tamu per booking">
         <Input
           disabled={isUpdating}
           type="number"
@@ -57,7 +57,7 @@ function UpdateSettingsForm() {
           onBlur={handleUpdateSetting}
         />
       </FormRow>
-      <FormRow label="Breakfast price">
+      <FormRow label="Harga layanan sarapan">
         <Input
           disabled={isUpdating}
           type="number"

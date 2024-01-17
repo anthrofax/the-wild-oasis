@@ -10,42 +10,42 @@ function CabinTableOperations() {
         options={[
           {
             value: "all",
-            label: "All",
+            label: "Semua",
           },
           {
             value: "no-discount",
-            label: "No Discount",
+            label: "Tanpa diskon",
           },
           {
             value: "with-discount",
-            label: "With Discount",
+            label: "Dengan diskon",
           },
         ]}
       />
       <SortBy options={[
         {
           value: 'name-asc',
-          label: 'Sort by Name (A-Z)'
+          label: 'Urutkan berdasarkan nama (A-Z)'
         },
         {
           value: 'name-dsc',
-          label: 'Sort by Name (Z-A)'
+          label: 'Urutkan berdasarkan nama (Z-A)'
         },
         {
           value: 'regularPrice-asc',
-          label: 'Sort by Regular Price (Low First)'
+          label: 'Urutkan berdasarkan Harga Normal (Low First)'
         },
         {
           value: 'regularPrice-dsc',
-          label: 'Sort by Regular Price (High First)'
+          label: 'Urutkan berdasarkan Harga Normal (High First)'
         },
         {
           value: 'maxCapacity-asc',
-          label: 'Sort by Maximum Capacity (Low First)'
+          label: 'Urutkan berdasarkan Kapasitas Maksimum (Low First)'
         },
         {
           value: 'maxCapacity-dsc',
-          label: 'Sort by Maximum Capacity (High First)'
+          label: 'Urutkan berdasarkan Kapasitas Maksimum (High First)'
         },
       ]} />
     </TableOperations>
