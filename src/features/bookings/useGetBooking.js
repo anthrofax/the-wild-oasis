@@ -14,5 +14,5 @@ export default function useGetBooking() {
     queryFn: () => getBooking(bookingId),
   });
 
-  return { isFetching, booking: booking || {}, fetchError };
+  return { isFetching, booking: booking , fetchError };
 }
