@@ -144,21 +144,21 @@ function prepareData(startData, stays) {
 function DurationChart({ confirmedStays }) {
   const { isDarkMode } = useDarkMode();
   const startDate = isDarkMode ? startDataDark : startDataLight;
-  const data = prepareData(startDate, confirmedStays)
+  const data = prepareData(startDate, confirmedStays);
 
   return (
     <ChartBox>
       <Heading as="h2">Catatan masa penginapan</Heading>
 
-      <ResponsiveContainer width="100%" height={240}>
-        <PieChart>
+      <ResponsiveContainer width="100%" height={240} >
+        <PieChart  >
           <Pie
             data={data}
             nameKey="duration"
             dataKey="value"
             innerRadius={85}
             outerRadius={110}
-            cx="40%"
+            cx="50%"
             cy="50%"
             paddingAngle={3}
           >
@@ -173,10 +173,11 @@ function DurationChart({ confirmedStays }) {
           <Legend
             verticalAlign="middle"
             align="right"
-            width="30%"
+            width="20%"
             layout="vertical"
             iconType="circle"
             iconSize={15}
+        
           />
           <Tooltip />
         </PieChart>
