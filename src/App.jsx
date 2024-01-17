@@ -32,6 +32,7 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <GlobalStyles />
         <ReactQueryDevtools initialIsOpen={false} />
+
         <BrowserRouter>
           <Routes>
             <Route
@@ -58,6 +59,7 @@ function App() {
             <Route path="*" element={<PageNotFound />}></Route>
           </Routes>
         </BrowserRouter>
+        
         <Toaster
           position="top-center"
           gutter={12}
