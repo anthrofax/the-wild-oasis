@@ -11,6 +11,8 @@ import "react-day-picker/dist/style.css";
 import { useReservation } from "./ReservationContext";
 
 function isAlreadyBooked(range, datesArr) {
+  if (!range?.from || !range?.to) return;
+
   return (
     range.from &&
     range.to &&

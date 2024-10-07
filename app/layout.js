@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/react";
 import Logo from "@/app/_components/Logo";
 import Navigation from "@/app/_components/Navigation";
 
@@ -35,6 +36,7 @@ export default function RootLayout({ children }) {
           </main>
         </div>
       </body>
+      <Analytics />
     </html>
   );
 }
